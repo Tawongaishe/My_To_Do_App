@@ -1,7 +1,7 @@
 import json
 from unittest.mock import patch
 
-from Backend import app
+from backend import app
 
 
 def test_get_list():

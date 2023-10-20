@@ -7,5 +7,3 @@ app.config.from_object('config.Config')
 db = SQLAlchemy(app)
 
 # login_manager = LoginManager(app)
-
-from . import routes
