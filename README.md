@@ -1,3 +1,4 @@
+
 Running the backend of the app: 
 1. cd tawo_to_do into the top level directory
 2. FLASK_APP=run.py
