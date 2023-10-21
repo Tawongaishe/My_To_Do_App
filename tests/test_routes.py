@@ -1,7 +1,9 @@
 import json
 from unittest.mock import patch
 
-from backend import app
+#import the app factory 
+from backend import create_app, db
+app = create_app()
 
 
 def test_get_list():
@@ -21,7 +23,7 @@ def test_get_list():
         }
 
 
-@patch('Backend.routes.List.edit')
+@patch('backend.routes.List.edit')
 def test_edit_list(mock_edit):
     with app.test_client() as client:
         # Make a PUT request to /lists/1 with a new title
@@ -33,7 +35,7 @@ def test_edit_list(mock_edit):
         mock_edit.assert_called_once_with('New Title')
 
 
-@patch('Backend.routes.List.delete')
+@patch('backend.routes.List.delete')
 def test_delete_list(mock_delete):
     with app.test_client() as client:
         # Make a DELETE request to /lists/1

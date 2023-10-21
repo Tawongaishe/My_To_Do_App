@@ -3,7 +3,7 @@ from flask_script import Manager  # Import Manager from Flask-Script
 
 
 # Import your Flask app instance here
-from Backend import app, db
+from backend import app, db
 
 
 # Create a manager object

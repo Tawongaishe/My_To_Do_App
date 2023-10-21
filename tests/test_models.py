@@ -24,9 +24,9 @@ def test_delete_task_and_subtasks():
 
     # Create a task with subtasks
     task = Task(title='Parent Task')
-    subtask1 = Task(title='Subtask 1', parent_task=task)
-    subtask2 = Task(title='Subtask 2', parent_task=task)
-    subsubtask = Task(title='Sub-subtask', parent_task=subtask1)
+    subtask1 = Task(title='Subtask 1', parent_task=task.id)
+    subtask2 = Task(title='Subtask 2', parent_task=task.id)
+    subsubtask = Task(title='Sub-subtask', parent_task=subtask1.id)
     db.session.add_all([task, subtask1, subtask2, subsubtask])
     db.session.commit()
 
