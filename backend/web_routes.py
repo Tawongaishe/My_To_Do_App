@@ -109,7 +109,7 @@ def create_subtask(list_id, task_id):
         elif not parent_task:
             flash('Parent task not found', 'error')
             return redirect(url_for('web.list_tasks', list_id=list_id))
-        elif parent_task.task_depth >= 2:
+        elif parent_task.task_depth > 1:
             flash('Cannot create a subtask at this depth level', 'error')
             return redirect(url_for('web.list_tasks', list_id=list_id))
         else:

@@ -83,7 +83,7 @@ class Task(db.Model):
             parent_task = Task.query.get(self.parent_id)
             if parent_task:
                 parent_depth = parent_task.task_depth
-                if parent_depth < 3:
+                if parent_depth < 2:
                     self.task_depth = parent_depth + 1
                     db.session.commit()
                     return True
