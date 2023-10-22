@@ -10,7 +10,8 @@ def create_app():
 
 
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'yoursecretkey'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db' #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@your-database-instance.amazonaws.com/your-database-name'
+
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
@@ -28,3 +29,5 @@ def create_app():
     return app
 
     # login_manager = LoginManager(app)
+
+

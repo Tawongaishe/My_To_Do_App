@@ -5,11 +5,11 @@ from .models import Task, List, db
 # Create a Blueprint for tasks
 tasks = Blueprint('tasks', __name__)
 
-@tasks.route('/', methods=['GET'])
+@tasks.route('/', methods=['GET']) #/api/
 def test():
     return jsonify({'message': 'It works!'}), 200
 
-@tasks.route('/lists', methods=['POST'])
+@tasks.route('/lists', methods=['POST']) #base_url/api/lists
 def create_list():
     data = request.get_json()
     title = data.get('title')
@@ -18,12 +18,11 @@ def create_list():
     db.session.commit()
     return jsonify(lst.make_dict()), 201
 
-@tasks.route('/lists', methods=['GET'])
+@tasks.route('/lists', methods=['GET']) #base_url/api/lists
 def list_all_lists():
     #get all lists from the db
     lists = List.query.all()
     list_data = []
-
     for lst in lists:
         list_data.append(lst.make_dict())
 
@@ -35,7 +34,7 @@ def get_list(list_id):
     lst = List.query.get(list_id)
     if lst:
         # Fetch the tasks associated with the list
-        tasks = Task.query.filter_by(list_id=list_id).all()
+        tasks = Task.query.filter_by(list_id=list_id).all() #SQL 
         
         # Create a dictionary to represent the data
         data = {
@@ -136,6 +135,6 @@ def mark_task_done(task_id):
 def delete_task(task_id):
     task = Task.query.get(task_id)
     if task:
-        task.delete()
+        task.delete_task_and_subtasks()
         return jsonify({'message': 'Task deleted successfully'}), 200
     return jsonify({'message': 'Task not found'}), 404

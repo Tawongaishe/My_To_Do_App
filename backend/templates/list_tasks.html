@@ -1,11 +1,40 @@
+<!-- Update your HTML template -->
 {% extends "base.html" %}
 
 {% block content %}
     <h1>Tasks in List: {{ list.title }}</h1>
+    
+    <div id="flash-message" class="hidden"></div>
+
     <ul>
         {% for task in tasks %}
-            <li>{{ task.title }}</li>
+            <li>
+                <div class="task">
+                    <div class="task-title" data-task-id="{{ task.id }}">
+                        {{ task.title }}
+                    </div>
+                    <div class="task-actions">
+                        <button class="edit-task" data-task-id="{{ task.id }}">Edit</button>
+                        <button class="delete-task" data-task-id="{{ task.id }}">Delete</button>
+                        <button class="toggle-subtask-form">Add SubTask</button>
+                        <form class="subtask-form hidden-form" action="{{ url_for('web.create_subtask', list_id=list.id, task_id=task.id) }}" method="post">
+                            <label for="task_title">SubTask Title:</label>
+                            <input type="text" id="task_title" name="title" required>
+                            <button type="submit">Add SubTask</button>
+                        </form> 
+                    </div>         
+                </div>
+            </li>
         {% endfor %}
     </ul>
-    <!-- Add more page-specific content here -->
+    <h2>Add New Task</h2>
+    <form action="{{ url_for('web.list_tasks', list_id=list.id )}}" method="post">
+        <label for="task_title">Task Title:</label>
+        <input type="text" id="task_title" name="title" required>
+        <button type="submit">Add Task</button>
+    </form>
 {% endblock %}
+<script src="/static/js/task-handler.js"></script>
+<script src="/static/js/flash-messages.js"></script>
+
+</html>

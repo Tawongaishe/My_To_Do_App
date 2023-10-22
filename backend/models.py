@@ -1,5 +1,6 @@
 from . import db
 from sqlalchemy.orm import collections
+from flask import flash
 
 class List(db.Model):
     """
@@ -58,31 +59,36 @@ class Task(db.Model):
     done = db.Column(db.Boolean, default=False)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'), nullable=True)
     task_depth = db.Column(db.Integer, default=0)
-    parent_id = db.Column(db.Integer, db.ForeignKey('task.id'), nullable=True)  # Allow null for root tasks
-    parent_task = db.relationship('Task', backref=db.backref('subtasks', remote_side=[id]))
+    parent_id = db.Column(db.Integer, db.ForeignKey('task.id'), default=None)  # Allow null for root tasks
+    subtasks = db.relationship('Task', backref=db.backref('parent_task', remote_side=[id]))
 
 
     def __init__(self, title, list_id, parent_id=None):
-        if parent_id is not None:
-            parent_task = Task.query.get(parent_id)
-            if parent_task and parent_task.task_depth >= 2:
-                raise ValueError("Cannot create a task at this depth level.")
+        # if parent_id is not None:
+        #     parent_task = Task.query.get(parent_id)
+        #     if parent_task and parent_task.task_depth >= 2:
+        #         raise ValueError("Cannot create a task at this depth level.")
+        #     self.task_depth = parent_task.task_depth + 1 if parent_task else 0
+
+        # else:
+        self.parent_id=parent_id
         self.title = title
         self.list_id = list_id
         self.parent_id = parent_id
-        self.task_depth = parent_task.task_depth + 1 if parent_task else 0
-
+        self.task_depth = 0
+        
 
     def calculate_depth(self):
         if self.parent_id:
             parent_task = Task.query.get(self.parent_id)
             if parent_task:
                 parent_depth = parent_task.task_depth
-                if parent_depth >= 3:
-                    raise ValueError("Cannot create a task at this depth level.")
-                self.task_depth = parent_depth + 1
-        else:
-            print('lalal')
+                if parent_depth < 3:
+                    self.task_depth = parent_depth + 1
+                    db.session.commit()
+                    return True
+                else:
+                    return False
         return {"message": "Task created successfully"}
 
     def add_subtask(self, title):
@@ -91,14 +97,16 @@ class Task(db.Model):
         db.session.commit()
 
     def delete_task_and_subtasks(self):
-        def delete_recursive(task):
+        def recursive_delete(task):
             if task.subtasks:
+                flash('subtasks exist')
                 for subtask in task.subtasks:
-                    delete_recursive(subtask)
+                    recursive_delete(subtask)
             db.session.delete(task)
-        
-        delete_recursive(self)
+
+        recursive_delete(self)
         db.session.commit()
+            
 
 
     def edit(self, new_title):
@@ -116,6 +124,7 @@ class Task(db.Model):
             'done': self.done,
             'parent_id': self.parent_id,
             'task_depth': self.task_depth,
+            'list_id': self.list_id,
         }
 
         
