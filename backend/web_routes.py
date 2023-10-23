@@ -69,9 +69,24 @@ def list_tasks(list_id, parent_id=None):
     list = List.query.get(list_id)
     tasks = Task.query.filter_by(list_id=list_id).all()
 
-    return render_template('list_tasks.html', tasks=tasks, list=list)
+    # Organize tasks into a list of dictionaries
+    task_list = []
+    for task in tasks:
+        if task.parent_id is None:
+            # This is a root task
+            task_dict = {
+                'task': task,
+                'subtasks': []
+            }
+            task_list.append(task_dict)
+        else:
+            # This is a subtask
+            for root_task_dict in task_list:
+                if task.parent_id == root_task_dict['task'].id:
+                    # Add subtask to the corresponding root task
+                    root_task_dict['subtasks'].append(task)
 
-
+    return render_template('list_tasks.html', task_list=task_list, list=list)
 @web.route('/list/<int:list_id>/<int:task_id>', methods=['POST'])
 def create_subtask(list_id, task_id):
     if request.method == 'POST':

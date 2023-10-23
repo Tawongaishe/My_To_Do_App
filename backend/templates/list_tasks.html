@@ -6,27 +6,64 @@
     
     <div id="flash-message" class="hidden"></div>
 
-    <ul>
-        {% for task in tasks %}
-            <li>
+    <div id="tasks-container">
+        {% for root_task_dict in task_list %}
+            <div class="task-card">
+                <!-- Root task content -->
                 <div class="task">
-                    <div class="task-title" data-task-id="{{ task.id }}">
-                        {{ task.title }}
-                    </div>
+                    <h2>{{ root_task_dict['task'].title }}</h2>
+                    <!-- Task title and actions -->
                     <div class="task-actions">
-                        <button class="edit-task" data-task-id="{{ task.id }}">Edit</button>
-                        <button class="delete-task" data-task-id="{{ task.id }}">Delete</button>
-                        <button class="toggle-subtask-form">Add SubTask</button>
-                        <form class="subtask-form hidden-form" action="{{ url_for('web.create_subtask', list_id=list.id, task_id=task.id) }}" method="post">
+                        <!-- Edit and delete buttons for root task -->
+                        <button class="edit-task" data-task-id="{{ root_task_dict['task'].id }}">Edit</button>
+                        <button class="delete-task" data-task-id="{{ root_task_dict['task'].id }}">Delete</button>
+                        <!-- Add SubTask form for root task -->
+                        <button class="toggle-subtask-form" data-parent-task-id="{{ root_task_dict['task'].id }}">Add SubTask</button>
+                        <form class="subtask-form hidden" action="{{ url_for('web.create_subtask', list_id=list.id, task_id=root_task_dict['task'].id) }}" method="post">
                             <label for="task_title">SubTask Title:</label>
                             <input type="text" id="task_title" name="title" required>
-                            <button type="submit">Add SubTask</button>
-                        </form> 
-                    </div>         
+                            <button type="submit">Save</button>
+                        </form>
+                    </div>
                 </div>
-            </li>
+                <ul class="subtasks">
+                    {% for subtask in root_task_dict['subtasks'] %}
+                        <li class="subtask">
+                            <!-- Subtask content -->
+                            <h3>{{ subtask.title }}</h3>
+                            <!-- Subtask title and actions -->
+                            <div class="subtask-actions">
+                                <!-- Edit and delete buttons for subtask -->
+                                <button class="edit-task" data-task-id="{{ subtask.id }}">Edit</button>
+                                <button class="delete-task" data-task-id="{{ subtask.id }}">Delete</button>
+                                <!-- Add SubTask form for subtask -->
+                                <button class="toggle-subtask-form" data-parent-task-id="{{ subtask.id }}">Add SubTask</button>
+                                <form class="subtask-form hidden" action="{{ url_for('web.create_subtask', list_id=list.id, task_id=subtask.id) }}" method="post">
+                                    <label for="task_title">SubTask Title:</label>
+                                    <input type="text" id="task_title" name="title" required>
+                                    <button type="submit">Save</button>
+                                </form>
+                            </div>
+                        </li>
+                        <ul class="subsubtasks">
+                            {% for subsubtask in subtask['subtasks'] %}
+                                <li class="subsubtask">
+                                    <!-- Subsubtask content -->
+                                    <h4>{{ subsubtask.title }}</h4>
+                                    <!-- Subsubtask title and actions -->
+                                    <div class="subsubtask-actions">
+                                        <!-- Edit and delete buttons for subsubtask -->
+                                        <button class="edit-task" data-task-id="{{ subsubtask.id }}">Edit</button>
+                                        <button class="delete-task" data-task-id="{{ subsubtask.id }}">Delete</button>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
     <h2>Add New Task</h2>
     <form action="{{ url_for('web.list_tasks', list_id=list.id )}}" method="post">
         <label for="task_title">Task Title:</label>
