@@ -87,10 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("clicked")
             const subtaskForm = toggleButton.nextElementSibling; // Get the form next to the button
             if (subtaskForm) {
-                subtaskForm.classList.toggle('hidden-form');
+                subtaskForm.classList.toggle('hidden');
             } else {
                 console.error('Subtask form not found');
-            subtaskForm.classList.toggle('hidden-form'); // Toggle the form's visibility
+            subtaskForm.classList.toggle('hidden'); // Toggle the form's visibility
         };
     });
 });
