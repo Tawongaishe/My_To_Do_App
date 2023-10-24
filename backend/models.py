@@ -1,6 +1,18 @@
-from . import db
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import collections
 from flask import flash
+from flask_login import UserMixin
+
+db = SQLAlchemy()
+class Users(UserMixin, db.Model):
+    """
+    
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(250), unique=True, nullable=False)  # Add an email column
+    password = db.Column(db.String(250), nullable=False)
+    tasks = db.relationship('Task', backref='user', lazy=True)
+    lists = db.relationship('List', backref='user', lazy=True)
 
 class List(db.Model):
     """
@@ -19,9 +31,11 @@ class List(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
     tasks = db.relationship('Task', backref='task_list', remote_side=[id], uselist=True, cascade="all, delete-orphan", single_parent=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    def __init__(self, title):
+    def __init__(self, title, user_id):
         self.title = title
+        self.user_id = user_id
 
     def delete(self):
         # Delete all tasks associated with this list
@@ -61,9 +75,10 @@ class Task(db.Model):
     task_depth = db.Column(db.Integer, default=0)
     parent_id = db.Column(db.Integer, db.ForeignKey('task.id'), default=None)  # Allow null for root tasks
     subtasks = db.relationship('Task', backref=db.backref('parent_task', remote_side=[id]))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 
-    def __init__(self, title, list_id, parent_id=None):
+    def __init__(self, title, list_id, user_id, parent_id=None):
         # if parent_id is not None:
         #     parent_task = Task.query.get(parent_id)
         #     if parent_task and parent_task.task_depth >= 2:
@@ -76,6 +91,7 @@ class Task(db.Model):
         self.list_id = list_id
         self.parent_id = parent_id
         self.task_depth = 0
+        self.user_id = user_id
         
 
     def calculate_depth(self):

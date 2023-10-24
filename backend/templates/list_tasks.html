@@ -4,7 +4,13 @@
 {% block content %}
     <h1>Tasks in List: {{ list.title }}</h1>
     
-    <div id="flash-message" class="hidden"></div>
+    <div id="flash-message" class="hidden">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <p>{{ messages[0] }}</p>
+        {% endif %}
+    {% endwith %}
+    </div>
 
     <div id="tasks-container">
         {% for root_task_dict in task_list %}
