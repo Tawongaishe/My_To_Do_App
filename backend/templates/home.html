@@ -9,7 +9,7 @@
     <ul>
         {% for list in lists %}
             <li>
-                <form action="{{ url_for('web.list_tasks', list_id=list.id) }}" method="get">
+                <form action="{{ url_for('web.list_tasks', list_id=list.id, user_id = list.user_id) }}" method="get">
                     <button type="submit">{{ list.title }}</button>
                 </form>
             </li>
