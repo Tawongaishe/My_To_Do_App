@@ -11,13 +11,11 @@
         {% endif %}
     {% endwith %}
     </div>
-
-    <div id="tasks-container">
         {% for root_task_dict in task_list %}
             <div class="task-card">
                 <!-- Root task content -->
-                <div class="task">
-                    <h2>{{ root_task_dict['task'].title }}</h2>
+                <div class="task task-card-root toggle-subtask-form">
+                    <h2 class = 'task_title'>{{ root_task_dict['task'].title }}</h2>
                     <!-- Task title and actions -->
                     <div class="task-actions">
                         <!-- Edit and delete buttons for root task -->
@@ -26,17 +24,17 @@
                         <!-- Add SubTask form for root task -->
                         <button class="toggle-subtask-form" data-parent-task-id="{{ root_task_dict['task'].id }}">Add SubTask</button>
                         <form class="subtask-form hidden" action="{{ url_for('web.create_subtask', list_id=list.id, task_id=root_task_dict['task'].id) }}" method="post">
-                            <label for="task_title">SubTask Title:</label>
+                            <label class="task_title">SubTask Title:</label>
                             <input type="text" id="task_title" name="title" required>
                             <button type="submit">Save</button>
                         </form>
                     </div>
                 </div>
-                <ul class="subtasks">
+                <div class="subtasks hidden">
                     {% for subtask in root_task_dict['subtasks'] %}
-                        <li class="subtask">
+                        <div class="subtask task-card-subtask toggle-subtask-form">
                             <!-- Subtask content -->
-                            <h3>{{ subtask.title }}</h3>
+                            <h3 class = 'task_title'>{{ subtask.title }}</h3>
                             <!-- Subtask title and actions -->
                             <div class="subtask-actions">
                                 <!-- Edit and delete buttons for subtask -->
@@ -50,10 +48,10 @@
                                     <button type="submit">Save</button>
                                 </form>
                             </div>
-                        </li>
-                        <ul class="subsubtasks">
+                        </div>
+                        <div class="subsubtasks hidden">
                             {% for subsubtask in subtask['subtasks'] %}
-                                <li class="subsubtask">
+                                <div class="subsubtask task-card-subsubtask">
                                     <!-- Subsubtask content -->
                                     <h4>{{ subsubtask.title }}</h4>
                                     <!-- Subsubtask title and actions -->
@@ -62,14 +60,13 @@
                                         <button class="edit-task" data-task-id="{{ subsubtask.id }}">Edit</button>
                                         <button class="delete-task" data-task-id="{{ subsubtask.id }}">Delete</button>
                                     </div>
-                                </li>
+                                </div>
                             {% endfor %}
-                        </ul>
+                        </div>
                     {% endfor %}
-                </ul>
+                </div>
             </div>
-        {% endfor %}
-    </div>
+         {% endfor %}
     <h2>Add New Task</h2>
     <form action="{{ url_for('web.list_tasks', list_id=list.id )}}" method="post">
         <label for="task_title">Task Title:</label>
@@ -78,8 +75,4 @@
     </form>
 {% endblock %}
 <script src="/static/js/task-handler.js"></script>
-<script src="/static/js/flash-messages.js"></script>
-<script src="{{ url_for('static', filename='js/toggle.js') }}"></script>
-
-
 </html>

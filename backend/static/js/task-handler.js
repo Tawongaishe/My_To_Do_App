@@ -1,6 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     // Function to send a PUT request to update the task title
+
     function updateTaskTitle(taskId, newTitle) {
         const url = `/api/tasks/${taskId}`;
         const data = {
@@ -80,6 +81,27 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // const taskCards = document.querySelectorAll('.task-card');
+
+    // taskCards.forEach(taskCard => {
+    //     taskCard.addEventListener('click', (event) => {
+    //         console.log('Clicked on task card!');
+    //         // Toggle the .collapsed class for subtasks and subsubtasks
+    //         const subtasksList = taskCard.querySelector('.subtasks');
+    //         const subsubtasksList = taskCard.querySelector('.subsubtasks');
+            
+    //         //console.log('subtasksList:', subtasksList);
+    //         console.log('subsubtasksList:', subsubtasksList);
+    //         if (subtasksList) {
+    //             console.log('Toggling subtasks');
+    //             subtasksList.classList.toggle('collapsed');
+    //         }
+    //         if (subsubtasksList) {
+    //             console.log('Toggling subsubtasks');
+    //             subsubtasksList.classList.toggle('collapsed');
+    //          }
+    //     });
+
     const toggleButtons = document.querySelectorAll('.toggle-subtask-form');
 
     toggleButtons.forEach(toggleButton => {
@@ -87,6 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("clicked")
             const subtaskForm = toggleButton.nextElementSibling; // Get the form next to the button
             if (subtaskForm) {
+                console.log('Subtask form found');
                 subtaskForm.classList.toggle('hidden');
             } else {
                 console.error('Subtask form not found');
@@ -97,25 +120,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // JavaScript to handle "Edit" button clicks
     const editButtons = document.querySelectorAll('.edit-task');
-    const taskTitles = document.querySelectorAll('.task-title');
+    const taskTitles = document.querySelectorAll('.task h2, .subtask h3, .subsubtask h4');
     const deleteButtons = document.querySelectorAll('.delete-task');
     const addSubtaskButtons = document.querySelectorAll('.add-subtask');
 
 
-    addSubtaskButtons.forEach(addSubtaskButton => {
-        addSubtaskButton.addEventListener('click', () => {
-            const parentTaskId = addSubtaskButton.dataset.parentTaskId;
-            const subtaskTitle = prompt('Enter the subtask title:');
-            if (subtaskTitle) {
-                // Implement the function to add the subtask
-                addSubtask(parentTaskId, subtaskTitle);
-            }
-        });
-    });
-
-
     deleteButtons.forEach(deleteButton => {
-        deleteButton.addEventListener('click', () => {
+        deleteButton.addEventListener('click', (event) => {
             event.stopPropagation(); 
             const taskId = deleteButton.dataset.taskId;
             if (confirm('Are you sure you want to delete this task?')) {
@@ -167,6 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Enable the "Edit" button
                     editButton.disabled = false;
                 }
+                console.log("Debug information:", editButtons, taskTitles, deleteButtons, addSubtaskButtons);
             });
 
             // Add a click event listener for the "Cancel" button
@@ -179,4 +191,4 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
-})
+});
