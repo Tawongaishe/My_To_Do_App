@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List App</title>
+    <script src="/static/js/task-handler.js"></script>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+</head>
+<body>
+    <div class="top-nav">
+        <nav class="white-nav">
+            <ul>
+                <li><a href="/home">Lists</a></li>
+                <li><h3>Hey Barbie! &#128150</h3></li>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+<div class = "home">
+    <div>
+        <h3>Hey there, Barbie!</br> Are you ready to slay today??</h3>
+        <p>Just like our fashion icon Barbie, you can be anything you dream of (well, almost anything.
+            no promises on the dream of becoming a software engineer)
+    <div class = "home-task-card">
+        <h2>Create a new list &#128150</h2>
+        <form class = "home-task-card" action="{{ url_for('web.create_list') }}" method="post">
+            <input  type="text" name="title" placeholder="Enter List Title" required>
+            <button class="button" type="submit">Create a List</button>
+        </form>
+        <div>
+            {% for list in lists %}
+                <h4>
+                    <form action="{{ url_for('web.list_tasks', list_id=list.id, user_id = list.user_id) }}" method="get">
+                        <button class = "side-bar-button" type="submit">{{ list.title }}</button>
+                    </form>
+                <h4>
+            {% endfor %}
+                </div>
+    </div>
+</div>

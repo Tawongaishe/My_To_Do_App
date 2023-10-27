@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="/static/css/register.css"> <!-- Include your CSS styles -->
+</head>
+<body>
+    <div id="flash-message">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <p>{{ messages[0] }}</p>
+        {% endif %}
+    {% endwith %}
+    </div>
+    <div class="container">
+        <h2>Log In</h2>
+        <form action="{{ url_for('auth.login') }}" method="post">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Log In</button>
+        </form>
+        <p>Don't have an account? <a href="{{ url_for('auth.signup') }}">Sign Up</a></p>
+    </div>
+</body>
+</html>

@@ -1,5 +1,5 @@
-from backend.models import Task
-from backend import db
+from app.models import Task
+from app import db
 
 def test_delete_task_and_subtasks():
     # Create a task with subtasks
