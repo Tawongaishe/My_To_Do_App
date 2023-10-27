@@ -5,6 +5,10 @@ Barbie To-Do is a web application that helps you manage your tasks and to-do lis
 
 This project is made with Python and Flask as the main server and html-page renderer. It makes use of Javascript for custom functionalities in which case it interacts with the API called routes.py. Other than 2 functions this API is not used in this application but built for the sake of building extensions on this application in the future. 
 
+
+https://github.com/Tawongaishe/My_To_Do_App/assets/92609012/313a97c9-1e86-49cc-ae9c-89e2e1d69847
+
+
 ## Table of Contents
 
 - [Features](#features)
@@ -54,10 +58,10 @@ This project is made with Python and Flask as the main server and html-page rend
 ## Prerequisites
 
 - Python (version 3 or higher)
-- Node (version something)
+- Node (version 3 or higher )
 - All other dependencies are included in the requirements.txt file which we will install
 
-AN understanding of HTML, CSS, Flask, Python and SQLAlchemy are reccommended.
+An understanding of HTML, CSS, Flask, Python and SQLAlchemy are recommended.
 
 ## Installation
 
