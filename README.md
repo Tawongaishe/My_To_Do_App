@@ -1,16 +1,20 @@
 
-# Your Web App Name
+# Barbie To-Do App
 
-Your Web App Name is a web application that helps you manage your tasks and to-do lists effortlessly. With this app, you can create, organize, and track tasks, subtasks, and more. This README will guide you through setting up and using the application.
+Barbie To-Do is a web application that helps you manage your tasks and to-do lists effortlessly. With this app, you can create, organize, and track tasks, subtasks, and more. This README will guide you through setting up and using the application.
+
+This project is made with Python and Flask as the main server and html-page renderer. It makes use of Javascript for custom functionalities in which case it interacts with the API called routes.py. Other than 2 functions this API is not used in this application but built for the sake of building extensions on this application in the future. 
 
 ## Table of Contents
 
 - [Features](#features)
+- [Project Struture](#project-structure)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
+
+
 
 ## Features
 
@@ -23,14 +27,37 @@ Your Web App Name is a web application that helps you manage your tasks and to-d
 - **Delete Lists:** Delete lists and their associated tasks.
 - **Flash Messages:** Receive informative messages and notifications.
 
+## Project Structure
+- `/app`: This is the root directory of the Flask application.
+
+### Static Files
+- `/app/static/css`: This directory contains the CSS files used for styling the web pages.
+- `/app/static/fonts`: Fonts used in the application are stored here.
+- `/app/static/js`: JavaScript files for adding interactivity to the web pages.
+
+### Templates
+- `/app/templates`: HTML templates used for rendering different web pages.
+  - `base.html`: The base template that provides the overall structure for all pages.
+  - `home.html`: The main page for displaying lists and tasks.
+  - `list_tasks.html`: A template for displaying tasks within a specific list.
+  - `login.html`: The login page for user authentication.
+  - `signup.html`: The signup page for user registration.
+
+### Python Files
+- `/app/__init__.py`: Initialization file for the Flask application.
+- `/app/auth.py`: Contains routes and logic related to user authentication and authorization.
+- `/app/models.py`: Defines the database models using SQLAlchemy, including Users, Lists, and Tasks.
+- `/app/routes.py`: Originally intended for API routes (not in use except for deleting and editing tasks)
+- `/app/web_routes.py`: Contains web routes and logic for rendering the web pages.
+
+
 ## Prerequisites
 
-Before you begin, ensure you have met the following requirements:
+- Python (version 3 or higher)
+- Node (version something)
+- All other dependencies are included in the requirements.txt file which we will install
 
-- Python (version x.x)
-- Flask (version x.x)
-- SQLAlchemy (version x.x)
-- Other dependencies...
+AN understanding of HTML, CSS, Flask, Python and SQLAlchemy are reccommended.
 
 ## Installation
 
@@ -74,29 +101,67 @@ To install and run Your Web App Name, follow these steps:
    pip install -r requirements.txt
    ```
 
-6. Create a configuration file (e.g., `config.py`) with the required settings, such as database connection details and secrets.
+6. Make sure nothing is running on your port 500:
+    If something is already running on port 5000 and you want to stop it, you can follow these steps:
 
-7. Set the `FLASK_APP` environment variable:
+    6.1. **Identify the Process:** First, you need to identify the process that is running on port 5000. You can use the following command to find the process using port 5000:
 
-   - On Windows:
+    On Windows:
+    ```bash
+    netstat -ano | findstr :5000
+    ```
 
-     ```bash
-     set FLASK_APP=app
-     ```
+    On macOS and Linux:
+    ```bash
+    lsof -i :5000
+    ```
 
-   - On macOS and Linux:
+    These commands will display a list of processes using port 5000, along with their process IDs (PIDs). If there are no processes listed, it means port 5000 is now available.
 
-     ```bash
-     export FLASK_APP=app
-     ```
+    If there are listed processes then:
+    6.2. **Terminate the Process:** Once you've identified the PID of the process, you can terminate it. Use the following command to kill the process on macOS and Linux:
 
-8. Run the application:
+    ```bash
+    kill -9 PID
+    ```
+
+    Replace `PID` with the actual process ID you want to terminate.
+
+    On Windows, you can use the `taskkill` command:
+
+    ```bash
+    taskkill /F /PID PID
+    ```
+
+    Again, replace `PID` with the actual process ID.
+
+    6.3. **Check Port Status:** After terminating the process, you can check the port status again to ensure that nothing is using port 5000:
+
+    On Windows:
+    ```bash
+    netstat -ano | findstr :5000
+    ```
+
+    On macOS and Linux:
+    ```bash
+    lsof -i :5000
+    ```
+
+    If there are no processes listed, it means port 5000 is now available.
+
+    Please exercise caution when terminating processes, especially if you're not sure what the process is. Be sure to terminate only processes that you are certain you no longer need.
+
+7. Run the application:
 
    ```bash
-   flask run
+   python app.py
    ```
+This application assumes that you will be using SQLite as your database.
 
-9. Access the app in your web browser at `http://localhost:5000`.
+8. Access the app in your web browser at `http://localhost:5000`.
+
+    
+
 
 ## Usage
 
@@ -141,9 +206,3 @@ To contribute to Your Web App Name, follow these steps:
 4. Push to the original branch: `git push origin feature/your-feature-name`.
 5. Create a pull request.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-```
-
-Feel free to customize this README file with more details about your app, such as special features, usage tips, or any additional sections you find necessary.

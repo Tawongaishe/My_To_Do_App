@@ -6,7 +6,14 @@ from flask_login import UserMixin
 db = SQLAlchemy()
 class Users(UserMixin, db.Model):
     """
-    
+    A class representing a user of the To-Do app.
+
+    Attributes:
+        id (int): The unique identifier for the user.
+        email (str): The email address associated with the user's account.
+        password (str): The hashed password for the user's account.
+        tasks (list): A list of Task objects associated with the user.
+        lists (list): A list of List objects associated with the user.
     """
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(250), unique=True, nullable=False)  # Add an email column
@@ -67,6 +74,17 @@ class Task(db.Model):
         task_depth (int): The depth level of the task in the task hierarchy.
         parent_id (int): The ID of the parent task, if this task is a subtask.
         parent_task (Task): The parent task object, if this task is a subtask.
+        subtasks (list): A list of subtasks for this task.
+        user_id (int): The ID of the user who created the task.
+
+    Methods:
+        __init__(self, title, list_id, user_id, parent_id=None): Initializes a new Task object.
+        calculate_depth(self): Calculates the depth level of the task in the task hierarchy.
+        add_subtask(self, title): Adds a new subtask to this task.
+        delete_task_and_subtasks(self): Deletes this task and all of its subtasks.
+        edit(self, new_title): Edits the title of this task.
+        mark_as_done(self): Marks this task as done.
+        make_dict(self): Returns a dictionary representation of this task.
     """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255))
@@ -79,13 +97,15 @@ class Task(db.Model):
 
 
     def __init__(self, title, list_id, user_id, parent_id=None):
-        # if parent_id is not None:
-        #     parent_task = Task.query.get(parent_id)
-        #     if parent_task and parent_task.task_depth >= 2:
-        #         raise ValueError("Cannot create a task at this depth level.")
-        #     self.task_depth = parent_task.task_depth + 1 if parent_task else 0
+        """
+        Initializes a new Task object.
 
-        # else:
+        Args:
+            title (str): The title of the task.
+            list_id (int): The ID of the list that the task belongs to.
+            user_id (int): The ID of the user who created the task.
+            parent_id (int, optional): The ID of the parent task, if this task is a subtask. Defaults to None.
+        """
         self.parent_id=parent_id
         self.title = title
         self.list_id = list_id
@@ -95,6 +115,12 @@ class Task(db.Model):
         
 
     def calculate_depth(self):
+        """
+        Calculates the depth level of the task in the task hierarchy.
+
+        Returns:
+            bool or dict: Returns True if the task depth was successfully calculated, False if the task depth is too deep, or a dictionary with a message if the parent task does not exist.
+        """
         if self.parent_id:
             parent_task = Task.query.get(self.parent_id)
             if parent_task:
@@ -108,11 +134,20 @@ class Task(db.Model):
         return {"message": "Task created successfully"}
 
     def add_subtask(self, title):
+        """
+        Adds a new subtask to this task.
+
+        Args:
+            title (str): The title of the subtask.
+        """
         subtask = Task(title=title, list_id=self.list_id, parent_id=self.id)
         db.session.add(subtask)
         db.session.commit()
 
     def delete_task_and_subtasks(self):
+        """
+        Deletes this task and all of its subtasks.
+        """
         def recursive_delete(task):
             if task.subtasks:
                 flash('subtasks exist')
@@ -126,14 +161,29 @@ class Task(db.Model):
 
 
     def edit(self, new_title):
+        """
+        Edits the title of this task.
+
+        Args:
+            new_title (str): The new title for the task.
+        """
         self.title = new_title
         db.session.commit()
 
     def mark_as_done(self):
+        """
+        Marks this task as done.
+        """
         self.done = True
         db.session.commit()
 
     def make_dict(self):
+        """
+        Returns a dictionary representation of this task.
+
+        Returns:
+            dict: A dictionary representation of this task.
+        """
         task_dict = {
             'id': self.id,
             'title': self.title,
@@ -148,7 +198,6 @@ class Task(db.Model):
             if isinstance(self.subtasks, (list, collections.InstrumentedList)):
                 task_dict['subtasks'] = [subtask.id for subtask in self.subtasks]
             else:
-                # Handle the case when self.subtasks is not a list
                 task_dict['subtasks'] = ['nothing here']
         else:
             task_dict['subtasks'] = []

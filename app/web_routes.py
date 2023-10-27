@@ -26,6 +26,16 @@ def home():
 @web.route('/lists', methods=['POST'])
 @login_required
 def create_list():
+    """
+    Creates a new to-do list for the current user.
+
+    If the request method is POST, this function retrieves the title of the new list from the request form data,
+    creates a new List object with the given title and the current user's ID, adds the new list to the database,
+    and redirects the user to the list_tasks view for the newly created list.
+
+    Returns:
+        A redirect response to the list_tasks view for the newly created list.
+    """
     if request.method == 'POST':
         title = request.form['title']
         print(title, current_user)
@@ -46,11 +56,13 @@ def list_tasks(list_id, parent_id=None):
 
     :param list_id: The ID of the list to fetch tasks for.
     :type list_id: int
+    :param parent_id: The ID of the parent task, if any.
+    :type parent_id: int, optional
     :return: The rendered HTML template with the tasks and list object as context variables.
+    :rtype: str
     """
 
     if request.method == 'POST':
-        # Get the task title from the form
         title = request.form.get('title')
         if not title:
             flash('Task title is required', 'error')
@@ -75,17 +87,14 @@ def list_tasks(list_id, parent_id=None):
     task_list = []
     for task in tasks:
         if task.parent_id is None:
-            # This is a root task
             task_dict = {
                 'task': task,
                 'subtasks': []
             }
             task_list.append(task_dict)
         else:
-            # This is a subtask
             for root_task_dict in task_list:
                 if task.parent_id == root_task_dict['task'].id:
-                    # Add subtask to the corresponding root task
                     root_task_dict['subtasks'].append(task)
 
     return render_template('list_tasks.html', task_list=task_list, list=list, lists=lists, current_user=current_user)
@@ -93,6 +102,19 @@ def list_tasks(list_id, parent_id=None):
 @web.route('/list/<int:list_id>/<int:task_id>', methods=['POST'])
 @login_required
 def create_subtask(list_id, task_id):
+    """
+    Creates a new subtask associated with the specified list and parent task.
+
+    Args:
+        list_id (int): The ID of the list to associate the subtask with.
+        task_id (int): The ID of the parent task to associate the subtask with.
+
+    Returns:
+        Redirects to the list_tasks view for the specified list ID.
+
+    Raises:
+        None.
+    """
     if request.method == 'POST':
         # Get the task title from the form
         title = request.form.get('title')
@@ -136,8 +158,6 @@ def create_subtask(list_id, task_id):
             subtask = Task(title=title, list_id=list_id, parent_id=task_id)
             db.session.add(subtask)
             db.session.commit()
-
-    # Fetch tasks associated with the specified list ID and parent task
 
 
 

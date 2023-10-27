@@ -10,17 +10,17 @@ body{
     font-family: 'Inter', sans-serif;
 }
 
-/* Add this to your CSS file (e.g., styles.css) */
+
 .flash-message {
-    display: none; /* Initially hidden */
+    display: none; 
     position: fixed;
     top: 10px;
     right: 10px;
-    background: #ff69b4; /* Barbie pink background */
-    color: #fff; /* White text color */
+    background: #ff69b4; 
+    color: #fff; 
     padding: 10px;
     border-radius: 5px;
-    z-index: 9999; /* Adjust as needed to ensure it's on top */
+    z-index: 9999; 
 }
 
 .hidden {
@@ -29,23 +29,23 @@ body{
 
 /* Task card container */
 .task-card, .task-card-root, .task-card-subtask, .task-card-subsubtask {
-    background-color: #f3eff2; /* Light pink background */
-    border: 1px solid #cb7fbc84; /* Barbie pink border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px; /* Add some padding inside the card */
-    margin: 10px; /* Add margin between cards */
-    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); /* A subtle box shadow */
-    color: #000; /* Black text color */
+    background-color: #f3eff2; 
+    border: 1px solid #cb7fbc84;
+    border-radius: 5px; 
+    padding: 10px; 
+    margin: 10px; 
+    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); 
+    color: #000; 
 }
 
 .home-task-card{
-    background-color: #ff69b4; /* Light pink background */
-    border: 1px solid #ff69b4; /* Barbie pink border */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px; /* Add some padding inside the card */
-    margin: 10px; /* Add margin between cards */
-    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); /* A subtle box shadow */
-    color: #000; /* Black text color */
+    background-color: #ff69b4; 
+    border: 1px solid #ff69b4; 
+    border-radius: 5px; 
+    padding: 10px;
+    margin: 10px;
+    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); 
+    color: #000; 
     justify-content: center;
 }
 
@@ -69,37 +69,31 @@ body{
 }
 /* Task title */
 .task h2, .subtask h3, .subsubtask h4 {
-    margin: 0; /* Remove default margin for headings */
-    font-size: 18px; /* Adjust the font size to your preference */
+    margin: 0; 
+    font-size: 18px; 
 }
 
 /* Task actions (buttons, forms, etc.) */
 .task-actions, .subtask-actions, .subsubtask-actions {
-    margin-top: 10px; /* Add space between the task title and actions */
+    margin-top: 10px; 
 }
 
-.active {
-    background-color: #ff69b4; /* Barbie pink background for active button */
-    color: #fff; /* White text color for active button */
-    border: none;
-    border-radius: 50%; /* Rounded border to create a circle */
-    padding: 10px; /* Adjust the padding as needed */
-}
+
 
 /* Subtask form (hidden by default) */
 .subtask-form {
-    margin-top: 10px; /* Add space below the Add SubTask button */
+    margin-top: 10px;
 }
 
 /* Subtasks and Subsubtasks lists */
 .subtasks, .subsubtasks {
-    list-style-type: none; /* Remove bullet points */
-    padding-left: 20px; /* Add some indentation to subtasks and subsubtasks */
+    list-style-type: none; 
+    padding-left: 20px;
 }
 
 /* Clickable container for task card */
 .task-card {
-    cursor: pointer; /* Show pointer cursor to indicate clickability */
+    cursor: pointer; 
 }
 
 /* Collapsed state for subtasks and subsubtasks */
@@ -109,28 +103,28 @@ body{
 
 /* Style for root tasks */
 .task-card-root {
-    background-color: #ff69b4; /* Light pink background for subtasks */
-    color: #fff; /* /* White text for root tasks */
+    background-color: #ff69b4; 
+    color: #fff; 
 }
 /* Style for subtasks */
 .task-card-subtask {
-    background-color: #fa87c0; /* Barbie pink background for root tasks */
-    color: #fff;  /* Barbie pink text for subtasks */
+    background-color: #fa87c0; 
+    color: #fff;  
 }
 
 /* Style for subsubtasks */
 .task-card-subsubtask {
-    background-color: #ffccd3; /* Light pink background for subtasks */
-    color: #5c246e;/* White text for subsubtasks */
+    background-color: #ffccd3; 
+    color: #5c246e;
 }
 
 /* Add this to your CSS file (e.g., styles.css) */
 .top-nav {
-    background-color: #ff69b4; /* Barbie pink background */
+    background-color: #ff69b4; 
     padding: 0px 20px;
-    border-radius: 15px; /* Rounded edges */
-    box-shadow: 0px 0px 10px rgba(255, 105, 180, 0.5); /* A subtle shadow */
-    color: #fff; /* White text color for navigation links */
+    border-radius: 15px; 
+    box-shadow: 0px 0px 10px rgba(255, 105, 180, 0.5); 
+    color: #fff; 
 }
 
 .white-nav ul {
@@ -142,47 +136,45 @@ body{
 }
 
 .white-nav ul li {
-    margin-right: 20px; /* Adjust the spacing between navigation items */
+    margin-right: 20px; 
 }
 
 .white-nav ul li:last-child {
-    margin-right: 0; /* Remove margin from the last item to prevent extra spacing */
+    margin-right: 0; 
 }
 
 .white-nav ul li a {
     text-decoration: none;
-    color: #fff; /* White text color for navigation links */
+    color: #fff; 
     font-weight: bold;
 }
 
 /* Style the user's name span */
 .white-nav ul li span {
-    color: #fff; /* White text color */
+    color: #fff; 
 }
 
-/* styles.css */
 .sidebar {
     height:1000px;
-    width: 250px; /* Adjust the width as needed */
-    background-color: #ffccd3; /* Light pink background for the sidebar */
-    padding: 20px; /* Add padding inside the sidebar */
-    float: left; /* Float the sidebar to the left */
+    width: 250px; 
+    padding: 20px; 
+    float: left; 
     display: flex;
     border: 1px solid #ff69b4;
+    border-bottom: 0px;
     flex-direction: column;
-    color: #5c246e; /* Black text color */
+    color: #5c246e; 
 }
 
 .side-bar-button {
-    display: block; /* Display the buttons as block elements to take the full width of the sidebar */
-    margin-bottom: 10px; /* Add space between each button */
-    color: #cf2e7e; /* Barbie pink button text color */
-    border-radius: 5px; /* Rounded corners */
-    padding: 10px; /* Add padding to the buttons */
-    cursor: pointer; /* Show a pointer cursor on hover */
-    background-color: #ffccd3; /* Light pink background */
-    border: 1px solid #ff69b4; /* Barbie pink border */
-    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); /* A subtle box shadow */
+    display: block; 
+    margin-bottom: 10px; 
+    color: #cf2e7e; 
+    border-radius: 5px; 
+    padding: 10px;
+    cursor: pointer; 
+    background-color: #ffccd3; 
+    border: 1px solid #ff69b4; /* A subtle box shadow */
     width: 100%;
 }
 .side-bar-button:hover {
@@ -191,24 +183,23 @@ body{
 
 .main-content {
     height:1000px;
-    margin-left: 270px; /* Adjust the margin to accommodate the sidebar width */
-    padding: 40px; /* Add padding inside the main content area */
-    background-color: #ffccd3; /* Light pink background */
-    padding: 20px; /* Add padding inside the main content */
+    margin-left: 270px; 
+    padding: 40px; 
+    background-color: #ffffff; 
+    padding: 20px; 
     padding-left: 40px;
-    color: #5c246e; /* Black text color */
-    border: 1px solid #ff69b4;
+    color: #5c246e; 
 }
 
 .button {
-    margin-bottom: 10px; /* Add space between each button */
-    color: #ff69b4; /* Barbie pink button text color */
-    border-radius: 5px; /* Rounded corners */
-    padding: 5px; /* Add padding to the buttons */
-    cursor: pointer; /* Show a pointer cursor on hover */
-    background-color: #ffccd3; /* Light pink background */
-    border: 1px solid #ff69b4; /* Barbie pink border */
-    /*box-shadow: 0 0 5px rgba(255, 105, 180, 0.5); * A subtle box shadow */
+    margin-bottom: 10px; 
+    color: #ff69b4; 
+    border-radius: 5px; 
+    padding: 5px; 
+    cursor: pointer; 
+    background-color: #ffccd3; 
+    border: 1px solid #ff69b4; 
+   
 }
 .button:hover {
     background-color: #f8dfe3;

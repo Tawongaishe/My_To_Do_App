@@ -30,7 +30,7 @@
                         <!-- Edit and delete buttons for root task -->
                         <button class="edit-task button" data-task-id="{{ root_task_dict['task'].id }}"><i class="fas fa-edit"></i></button>
                         <button class="delete-task button" data-task-id="{{ root_task_dict['task'].id }}"><i class="fas fa-trash-alt"></i></button>
-                        <!-- Add SubTask form for root task -->
+                        <!--  SubTask form for root task -->
                         <button class="toggle-subtask-form button" data-parent-task-id="{{ root_task_dict['task'].id }}"><i class="fas fa-plus"></i></button>
                         <form class="subtask-form hidden" action="{{ url_for('web.create_subtask', list_id=list.id, task_id=root_task_dict['task'].id) }}" method="post">
                             <label class="task_title">SubTask Title:</label>
@@ -65,7 +65,7 @@
                                 <!-- Edit and delete buttons for subtask -->
                                 <button class="edit-task button" data-task-id="{{ subtask.id }}"><i class="fas fa-edit"></i></button>
                                 <button class="delete-task button" data-task-id="{{ subtask.id }}"><i class="fas fa-trash-alt"></i></button>
-                                <!-- Add SubTask form for subtask -->
+                                <!--  SubTask form for subtask -->
                                 <button class="toggle-subtask-form button" data-parent-task-id="{{ subtask.id }}"><i class="fas fa-plus"></i></button>
                                 <form class="subtask-form hidden" action="{{ url_for('web.create_subtask', list_id=list.id, task_id=subtask.id) }}" method="post">
                                     <label for="task_title">SubTask Title:</label>

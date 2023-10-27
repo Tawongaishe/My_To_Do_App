@@ -5,9 +5,6 @@ from .models import Task, List, db
 # Create a Blueprint for tasks
 tasks = Blueprint('tasks', __name__)
 
-@tasks.route('/', methods=['GET']) #/api/
-def test():
-    return jsonify({'message': 'It works!'}), 200
 
 @tasks.route('/lists', methods=['POST']) #base_url/api/lists
 def create_list():
@@ -75,6 +72,17 @@ def list_all_tasks():
 
 @tasks.route('/add_subtask/<int:task_id>', methods=['POST'])
 def add_subtask(task_id):
+    """
+    Add a subtask to a parent task.
+
+    Args:
+        task_id (int): The ID of the parent task.
+
+    Returns:
+        A JSON response containing the ID of the newly created subtask and a success message.
+        If the parent task is not found, a 404 error is returned.
+        If the subtask depth is greater than 3, a 400 error is returned.
+    """
     data = request.get_json()
     parent_id = task_id
     title = data.get('title')
